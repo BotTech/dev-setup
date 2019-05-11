@@ -10,7 +10,11 @@ This repository contains everything that you need to setup a new development env
 
 Run the following command in a terminal:
 ```bash
-wget -O - https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8318d0606a797990fa9ae9a67ca743359/dev-setup.sh | bash
+bash <(curl -s https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8318d0606a797990fa9ae9a67ca743359/dev-setup.sh)
+```
+or
+```bash
+bash <(wget -q -O - https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8318d0606a797990fa9ae9a67ca743359/dev-setup.sh)
 ```
 
 ⚠️ WARNING: This command is going to execute code on your machine. Never run code that you do not trust. You can read the [code](https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8318d0606a797990fa9ae9a67ca743359/dev-setup.sh) here (check that the URL matches the one above).
