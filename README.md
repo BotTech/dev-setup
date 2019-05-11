@@ -13,11 +13,11 @@ Run the following command in a terminal:
 wget -O - https://raw.githubusercontent.com/BotTech/dev-setup/XXX/dev-setup.sh | bash
 ```
 
-⚠️ WARNING: This command is going to execute code on your machine. Never run code that you do not trust. You can read the (code)[https://raw.githubusercontent.com/BotTech/dev-setup/XXX/dev-setup.sh] here (check that the URL matches the one above).
+⚠️ WARNING: This command is going to execute code on your machine. Never run code that you do not trust. You can read the [code](https://raw.githubusercontent.com/BotTech/dev-setup/XXX/dev-setup.sh) here (check that the URL matches the one above).
 
 ### Creating a fork
 
-1. (Fork the original repository)[fork-do-not-change-this].*
+1. [Fork the original repository](fork-do-not-change-this).*
 1. Clone your fork.
 1. Edit `README.md` and update the URL in the previous section to point to raw `dev-setup.sh` script.
 1. Edit the XXX file (TODO).
