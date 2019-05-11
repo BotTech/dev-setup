@@ -19,6 +19,8 @@ bash <(wget -q -O - https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8
 
 ⚠️ WARNING: These commands will execute code on your machine. Never run code that you do not trust. You can read the [code](https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8318d0606a797990fa9ae9a67ca743359/dev-setup.sh) here (check that the URL matches the one above).
 
+## Forking
+
 ### Creating a fork
 
 1. [Fork the original repository](fork-do-not-change-this).*
