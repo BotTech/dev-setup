@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-previous_commit=2c011cf63d9c178b93eedf8fd14fdf492f5d0d2e
+previous_commit=3497553571b3ff580478621cf278e21a1989a575
 latest_commit="$(git rev-parse HEAD)"
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
