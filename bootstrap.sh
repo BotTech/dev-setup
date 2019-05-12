@@ -2,6 +2,7 @@
 
 set -e
 
+readonly DEV_SETUP_GIT_BRANCH=master
 readonly DEV_SETUP_GIT_URL=git@github.com:BotTech/dev-setup.git
 
 readonly EXIT_CANNOT_PARSE_SSH_KEYGEN=1
@@ -180,6 +181,8 @@ default_dir="$(pwd)/dev-setup"
 read -p "Enter directory in which to clone dev-setup (${default_dir}): " dir
 dir="${dir:-$default_dir}"
 git clone "${DEV_SETUP_GIT_URL}" "${dir}"
+cd "${dir}"
+git checkout "${DEV_SETUP_GIT_BRANCH}"
 
-bash "${dir}/dev-setup.sh"
+bash "dev-setup.sh"
 
