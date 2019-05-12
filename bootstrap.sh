@@ -2,7 +2,10 @@
 
 set -e
 
+readonly DEV_SETUP_GIT_URL=git@github.com:BotTech/dev-setup.git
+
 readonly EXIT_CANNOT_PARSE_SSH_KEYGEN=1
+readonly EXIT_GITHUB_SSH_FAILED=2
 
 echo "Bootstrapping dev-setup..."
 
@@ -47,39 +50,36 @@ get_ssh_key() {
 
 add_ssh_key_macos() {
   local private_key="$1"
-  local public_key="${private_key}.pub"
   eval "$(ssh-agent -s)"
   cat << EOF >> ~/.ssh/config
 Host *
   AddKeysToAgent yes
   UseKeychain yes
-  IdentityFile ${public_key}
+  IdentityFile ${private_key}
 EOF
   ssh-add -K "${private_key}"
 }
 
 add_ssh_key_linux() {
   local private_key="$1"
-  local public_key="${private_key}.pub"
   eval "$(ssh-agent -s)"
   # TODO: Check that this configuration is correct.
   cat << EOF >> ~/.ssh/config
 Host *
   AddKeysToAgent yes
-  IdentityFile ${public_key}
+  IdentityFile ${private_key}
 EOF
   ssh-add "${private_key}"
 }
 
 add_ssh_key_windows() {
   local private_key="$1"
-  local public_key="${private_key}.pub"
   eval "$(ssh-agent -s)"
   # TODO: Check that this configuration is correct.
   cat << EOF >> ~/.ssh/config
 Host *
   AddKeysToAgent yes
-  IdentityFile ${public_key}
+  IdentityFile ${private_key}
 EOF
   ssh-add "${private_key}"
   # This assumes that the native SSH agent is being used and not the one from cygwin/msys.
@@ -164,6 +164,7 @@ setup_github_ssh() {
   if ! test_github_ssh; then
     >&2 echo "Failed to setup SSH to connect to GitHub. Please report this issue."
     >&2 echo "In the meantime, you can workaround this by setting it up manually by following the instructions on https://help.github.com/en/articles/connecting-to-github-with-ssh"
+    exit "${EXIT_GITHUB_SSH_FAILED}"
   fi
 }
 
@@ -174,4 +175,11 @@ setup_github() {
 }
 
 setup_github
+
+default_dir="$(pwd)/dev-setup"
+read -p "Enter directory in which to clone dev-setup (${default_dir}): " dir
+dir="${dir:-$default_dir}"
+git clone "${DEV_SETUP_GIT_URL}" "${dir}"
+
+bash "${dir}/dev-setup.sh"
 

@@ -41,3 +41,4 @@ bash <(wget -q -O - https://raw.githubusercontent.com/BotTech/dev-setup/5773cad5
 \* It is recommended that you only clone the original repository as there may be a lag in the intermediary repository getting updates from upstream. If you find a fork which has things that the original repository doesn't have then encourage the maintaner (or submit a PR yourself) to contribute these changes.
 
 [fork-do-not-change-this]: https://github.com/BotTech/dev-setup/fork
+
