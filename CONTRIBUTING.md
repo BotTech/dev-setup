@@ -2,11 +2,12 @@
 
 ### Updating dev-setup.sh
 
-If you update [dev-setup.sh](dev-setup.sh) you will need to update the links in the [README.md](README.md).
+If you update [bootstrap.sh](bootstrap.sh) you will need to update the links in the [README.md](README.md) and [CONTRIBUTING.md](CONTRIBUTING.md) (for the convenience of the next person).
 
-To get the new link:
-1. Click the link above to go to the latest version of the file.
-1. Click the `History` button.
-1. Click the `<>` button.
-1. Copy the SHA1 from the end of the URL.
-1. Replace the old SHA1 with the one that was copied from the previous step.
+To update the links:
+1. Commit the changes to `bootstrap.sh`.
+1. Run this to update `README.md` and `CONTRIBUTING.md`:
+   ```bash
+   sed -i "" "s/60d36a30887d7ad3200bf02a55ab68e125731709/$(git rev-parse HEAD)/g" README.md CONTRIBUTING.md
+   ```
+   (TODO: adapt for other operating systems)
