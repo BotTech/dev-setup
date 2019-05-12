@@ -122,8 +122,26 @@ open_browser() {
       explorer "${url}"
       ;;
     *)
-      echo "Failed"
       >&2 echo "Cannot open the web browser for your operating system (${os})."
+      ;;
+  esac
+}
+
+copy_to_clipboard() {
+  local to_copy="$1"
+  case "${OSTYPE}" in
+    linux-gnu)
+      # This assumes that X Window is being used.
+      xclip < "${to_copy}"
+      ;;
+    darwin*)
+      pbcopy < "${to_copy}"
+      ;;
+    cygwin|msys)
+      clip < "${to_copy}"
+      ;;
+    *)
+      >&2 echo "Cannot copy to the clipboard for your operating system (${os})."
       ;;
   esac
 }
@@ -131,10 +149,11 @@ open_browser() {
 add_key_to_github() {
   local private_key="$1"
   local public_key="${private_key}.pub"
-  clip < "${public_key}" && echo "Copied ${public_key} to the clipboard."
+  copy_to_clipboard "${public_key}" && echo "Copied ${public_key} to the clipboard."
   echo "Add your SSH public key to GitHub (https://github.com/settings/keys)."
   open_browser "https://github.com/settings/keys"
   read -p "Press enter when done..."
+  copy_to_clipboard /dev/null
 }
 
 setup_github_ssh() {
