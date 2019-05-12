@@ -8,16 +8,26 @@ This repository contains everything that you need to setup a new development env
 
 ### Setting up your development environment
 
+⚠️ WARNING: These commands will execute code on your machine. Never run code that you do not trust. You should read the [code](https://raw.githubusercontent.com/BotTech/dev-setup/a1c69b11c3f9d2e8a70195688683addff839fe4d/bootstrap.sh) (also check that the URL matches the one above).
+
+⚠️ DISCLAIMER: While we endeavor to make these scripts free from bugs we cannot guarantee that these scripts will not cause unwanted side effects. It is your responsibility to take adequate backups to ensure that you can recover from any issues. If you find any issues with these scripts then please report them.
+
+#### macOS
+
 Run the following command in a terminal:
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8318d0606a797990fa9ae9a67ca743359/dev-setup.sh)
-```
-or
-```bash
-bash <(wget -q -O - https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8318d0606a797990fa9ae9a67ca743359/dev-setup.sh)
+bash <(curl -s https://raw.githubusercontent.com/BotTech/dev-setup/a1c69b11c3f9d2e8a70195688683addff839fe4d/bootstrap.sh)
 ```
 
-⚠️ WARNING: These commands will execute code on your machine. Never run code that you do not trust. You should read the [code](https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8318d0606a797990fa9ae9a67ca743359/dev-setup.sh) (also check that the URL matches the one above).
+#### Windows
+
+TODO
+
+#### Linux
+
+```bash
+bash <(wget -q -O - https://raw.githubusercontent.com/BotTech/dev-setup/a1c69b11c3f9d2e8a70195688683addff839fe4d/bootstrap.sh)
+```
 
 ## Forking
 
@@ -25,10 +35,9 @@ bash <(wget -q -O - https://raw.githubusercontent.com/BotTech/dev-setup/93df30a8
 
 1. [Fork the original repository](fork-do-not-change-this).*
 1. Clone your fork.
-1. Edit `README.md` and update the URL in the previous section to point to raw `dev-setup.sh` script.
+1. Edit `README.md` and update the URL in the previous section to point to raw `bootstrap.sh` script.
 1. Edit the XXX file (TODO).
 
 \* It is recommended that you only clone the original repository as there may be a lag in the intermediary repository getting updates from upstream. If you find a fork which has things that the original repository doesn't have then encourage the maintaner (or submit a PR yourself) to contribute these changes.
 
 [fork-do-not-change-this]: https://github.com/BotTech/dev-setup/fork
-
