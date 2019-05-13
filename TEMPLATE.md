@@ -2,11 +2,7 @@
 
 This repository contains everything that you need to automatically setup a development environment.
 
-`master` is the starting point and does nothing on its own. The intention is that you will fork this repository a configure it to setup your development environment just the way that you like it. See [example](example-branch) for an example of how you can configure `dev-setup`.
-
 ## Usage
-
-ℹ️ This is what the usage will look like to give you a feel for what the end result is. Follow the instructions below on [creating a fork](#creating-a-fork).
 
 ### Setting up your development environment
 
@@ -31,20 +27,4 @@ TODO
 bash <(wget -q -O - https://raw.githubusercontent.com/BotTech/dev-setup/3497553571b3ff580478621cf278e21a1989a575/bootstrap.sh)
 ```
 \* Some flavours of Linux do not have `wget` installed. If you have `curl` then use the command for [macOS](#macos). Otherwise you will have to download and run [bootstrap.sh](https://raw.githubusercontent.com/BotTech/dev-setup/3497553571b3ff580478621cf278e21a1989a575/bootstrap.sh) manually.
-
-## Forking
-
-### Creating a fork
-
-1. [Fork the original repository](fork-do-not-change-this).*
-1. Clone your fork.
-1. Run:
-```
-bash bin/init-fork.sh
-```
-
-\* It is recommended that you only clone the original repository as there may be a lag in the intermediary repository getting updates from upstream. If you find a fork which has things that the original repository doesn't have then encourage the maintaner (or submit a PR yourself) to contribute these changes.
-
-[fork-do-not-change-this]: https://github.com/BotTech/dev-setup/fork
-[example-branch]: https://github.com/BotTech/dev-setup/blob/example
 
