@@ -7,14 +7,21 @@ readonly PREVIOUS_REMOTE_RAW_URL="https://raw.githubusercontent.com/BotTech/dev-
 readonly PREVIOUS_REMOTE_GIT_URL="git@github.com:BotTech/dev-setup.git"
 readonly PREVIOUS_COMMIT=3497553571b3ff580478621cf278e21a1989a575
 
-previous_remote_url="${PREVIOUS_REMOTE_URL//\//\\/}"
-previous_remote_raw_url="${PREVIOUS_REMOTE_RAW_URL//\//\\/}"
-previous_remote_git_url="${PREVIOUS_REMOTE_GIT_URL//\//\\/}"
+escape_slashes() {
+  echo "${1//\//\\/}"
+}
+
+previous_remote_url="$(escape_slashes PREVIOUS_REMOTE_URL)"
+previous_remote_raw_url="$(escape_slashes PREVIOUS_REMOTE_RAW_URL)"
+previous_remote_git_url="$(escape_slashes PREVIOUS_REMOTE_GIT_URL)"
 previous_commit="${PREVIOUS_COMMIT}"
 current_remote_url="$(git config --get remote.origin.url)"
 current_remote_url="${current_remote_url%\.git}"
 current_remote_raw_url="${current_remote_url/https:\/\/github.com/https://raw.githubusercontent.com}"
 current_remote_git_url="${current_remote_url/https:\/\/github.com\//git@github.com:}"
+current_remote_url="$(escape_slashes current_remote_url)"
+current_remote_raw_url="$(escape_slashes current_remote_raw_url)"
+current_remote_git_url="$(escape_slashes current_remote_git_url)"
 current_commit="$(git rev-parse HEAD)"
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
