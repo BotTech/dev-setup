@@ -175,14 +175,40 @@ setup_github() {
   fi
 }
 
+clone() {
+  local url="${1:-${DEV_SETUP_GIT_URL}}"
+  local branch="${2:-${DEV_SETUP_GIT_BRANCH}}"
+  local default_dir="$(pwd)/dev-setup"
+  local dir
+  read -p "Enter directory to clone to (${default_dir}): " dir
+  dir="${dir:-$default_dir}"
+  git clone "${url}" "${dir}"
+  git --git-dir="${dir}" checkout "${branch}"
+  echo "${dir}"
+}
+
+fork() {
+  local url="${1:-${DEV_SETUP_GIT_URL}}"
+  echo "Fork the repository (${url})."
+  open_browser "${url}"
+  read -p "Press enter when done..."
+  local fork_url
+  read -p "Enter the SSH URL to your fork: " fork_url
+  shift
+  local dir="$(clone "${fork_url}" "$@")"
+  bash "${dir}/bin/init-fork.sh"
+}
+
+dev_setup() {
+  local dir="$(clone "${DEV_SETUP_GIT_URL}" "$@")"
+  bash "${dir}/bin/dev-setup.sh"
+}
+
 setup_github
 
-default_dir="$(pwd)/dev-setup"
-read -p "Enter directory in which to clone dev-setup (${default_dir}): " dir
-dir="${dir:-$default_dir}"
-git clone "${DEV_SETUP_GIT_URL}" "${dir}"
-cd "${dir}"
-git checkout "${DEV_SETUP_GIT_BRANCH}"
-
-bash "dev-setup.sh"
+if [[ "$1" == "fork" ]]; then
+  fork "$@"
+elif [[ "$1" == "setup" ]]; then
+  dev_setup "$@"
+fi
 
