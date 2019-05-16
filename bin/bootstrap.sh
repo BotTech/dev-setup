@@ -182,8 +182,8 @@ clone() {
   local dir
   read -p "Enter directory to clone to (${default_dir}): " dir
   dir="${dir:-$default_dir}"
-  git clone "${url}" "${dir}"
-  git -C "${dir}" checkout "${branch}"
+  git clone "${url}" "${dir}" > /dev/null
+  git -C "${dir}" checkout "${branch}" > /dev/null
   echo "${dir}"
 }
 
@@ -195,12 +195,14 @@ fork() {
   local fork_url
   read -p "Enter the SSH URL to your fork: " fork_url
   shift
-  local dir="$(clone "${fork_url}" "$@")"
+  local dir
+  dir="$(clone "${fork_url}" "$@")"
   bash "${dir}/bin/init-fork.sh"
 }
 
 dev_setup() {
-  local dir="$(clone "${DEV_SETUP_GIT_URL}" "$@")"
+  local dir
+  dir="$(clone "${DEV_SETUP_GIT_URL}" "$@")"
   bash "${dir}/bin/dev-setup.sh"
 }
 
