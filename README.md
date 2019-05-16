@@ -2,7 +2,7 @@
 
 This repository contains everything that you need to automatically setup a development environment.
 
-`master` is the starting point and does nothing on its own. The intention is that you will fork this repository a configure it to setup your development environment just the way that you like it. See [example](example-branch) for an example of how you can configure `dev-setup`.
+`master` is the starting point and does nothing on its own. The intention is that you will fork this repository a configure it to setup your development environment just the way that you like it. See [example][example-branch] for an example of how you can configure `dev-setup`.
 
 ## Usage
 
@@ -36,7 +36,7 @@ bash <(wget -q -O - https://raw.githubusercontent.com/BotTech/dev-setup/88656691
 
 ### Creating a fork
 
-1. [Fork the original repository](fork-do-not-change-this).*
+1. [Fork the original repository][fork-do-not-change-this].*
 1. Clone your fork.
 1. Run:
 ```
