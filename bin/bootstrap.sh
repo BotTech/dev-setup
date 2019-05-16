@@ -183,7 +183,7 @@ clone() {
   read -p "Enter directory to clone to (${default_dir}): " dir
   dir="${dir:-$default_dir}"
   git clone "${url}" "${dir}"
-  git --git-dir="${dir}" checkout "${branch}"
+  git -C "${dir}" checkout "${branch}"
   echo "${dir}"
 }
 
