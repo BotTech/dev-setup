@@ -6,7 +6,7 @@ This repository contains everything that you need to automatically setup a devel
 
 ## Usage
 
-ℹ️ This is what the usage will look like to give you a feel for what the end result is. Follow the instructions below on [creating a fork](#creating-a-fork).
+ℹ️ EXAMPLE: This is just an exmaple to demonstrate how this repository can be used once configured. Do not actually follow these instructions but instead skip ahead to [creating a fork](#creating-a-fork).
 
 ### Setting up your development environment
 
