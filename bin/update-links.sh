@@ -32,7 +32,7 @@ update_links_mac() {
   sed -i "" "s/${previous_remote_git_url}/${current_remote_git_url}/g" "${script_dir}/../bootstrap.sh"
   sed -i "" "s/${previous_commit}/${current_commit}/g" "${script_dir}/../README.md"
   sed -i "" "s/${previous_commit}/${current_commit}/g" "${script_dir}/update-links.sh"
-  [[ -f "${script_dir}/../TEMPLATE.md" ]] && sed -i "" "s/${previous_commit}/${current_commit}/g" "${script_dir}/../TEMPLATE.md"
+  [[ ! -f "${script_dir}/../TEMPLATE.md" ]] || sed -i "" "s/${previous_commit}/${current_commit}/g" "${script_dir}/../TEMPLATE.md"
 }
 
 # TODO: De-duplicate these.
