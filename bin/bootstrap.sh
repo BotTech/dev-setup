@@ -207,8 +207,10 @@ dev_setup() {
 setup_github
 
 if [[ "$1" == "fork" ]]; then
+  shift
   fork "$@"
 elif [[ "$1" == "setup" ]]; then
+  shift
   dev_setup "$@"
 fi
 
