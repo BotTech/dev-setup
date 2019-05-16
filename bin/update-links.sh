@@ -3,7 +3,7 @@
 set -e
 
 readonly PREVIOUS_REMOTE_HTTP_URL="https://github.com/BotTech/dev-setup.git"
-readonly PREVIOUS_COMMIT=d403b0b141451b810ce8c6635316f1f13f0e96f0
+readonly PREVIOUS_COMMIT=450ea6d6bbafc1d9f46f525c8ace40c9e78f8f7f
 
 escape_slashes() {
   echo "${1//\//\\/}"
