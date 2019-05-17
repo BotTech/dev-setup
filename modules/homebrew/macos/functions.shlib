@@ -1,0 +1,10 @@
+brew_install_quiet() {
+  brew info "$1" | grep --quiet 'Not installed' && brew install "$1"
+}
+typeset -fx brew_install_quiet
+
+brew_cask_install_quiet() {
+  brew cask info "$1" | grep --quiet 'Not installed' && brew cask install "$1"
+}
+typeset -fx brew_cask_install_quiet
+
