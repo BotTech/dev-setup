@@ -54,4 +54,3 @@ case "${OSTYPE}" in
     exit 1
     ;;
 esac
-
