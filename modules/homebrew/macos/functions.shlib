@@ -1,11 +1,15 @@
 brew_install_quiet() {
-  brew info "$1" | grep --quiet 'Not installed' && brew install "$@"
+  if brew info "$1" | grep --quiet 'Not installed'; then
+    brew install "$@"
+  fi
 }
 typeset -fx brew_install_quiet
 
 brew_upgrade_quiet() {
   # TODO: Need a better way to do this.
-  brew outdated | grep --quiet "$1" && brew upgrade "$@"
+  if brew outdated | grep --quiet "$1"; then
+    brew upgrade "$@"
+  fi
 }
 typeset -fx brew_upgrade_quiet
 
@@ -19,13 +23,17 @@ brew_install_or_upgrade() {
 typeset -fx brew_install_or_upgrade
 
 brew_cask_install_quiet() {
-  brew cask info "$1" | grep --quiet 'Not installed' && brew cask install "$@"
+  if brew cask info "$1" | grep --quiet 'Not installed'; then
+    brew cask install "$@"
+  fi
 }
 typeset -fx brew_cask_install_quiet
 
 brew_cask_upgrade_quiet() {
   # TODO: Need a better way to do this.
-  brew cask outdated | grep --quiet "$1" && brew cask upgrade "$@"
+  if brew cask outdated | grep --quiet "$1"; then
+    brew cask upgrade "$@"
+  fi
 }
 typeset -fx brew_cask_upgrade_quiet
 

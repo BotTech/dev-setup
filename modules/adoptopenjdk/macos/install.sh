@@ -2,4 +2,9 @@
 
 brew tap AdoptOpenJDK/openjdk
 
-brew_cask_install_quiet "adoptopenjdk$1"
+if [[ "$1" == "8" ]]; then
+  # Temporary workaround for https://github.com/AdoptOpenJDK/homebrew-openjdk/issues/106
+  brew_cask_install_quiet adoptopenjdk/openjdk/adoptopenjdk8
+else
+  brew_cask_install_quiet "adoptopenjdk$1"
+fi

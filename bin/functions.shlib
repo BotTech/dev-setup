@@ -1,0 +1,12 @@
+unless_command_exists() {
+  command -v "$1" >/dev/null 2>&1 || { shift; "$@"; }
+}
+typeset -fx unless_command_exists
+
+add_to_bash_profile() {
+  if ! grep -qxF "$1" ~/.bash_profile; then
+    echo "$1" >> ~/.bash_profile
+    echo "~/.bash_profile has been modified. To reload run: source ~/.bash_profile"
+  fi
+}
+typeset -fx add_to_bash_profile
