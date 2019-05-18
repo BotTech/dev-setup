@@ -17,11 +17,11 @@ test_github_ssh() {
   echo "Testing whether we can connect to GitHub via SSH... "
   set +e
   ssh -T git@github.com
-  local gitHubResponse="$?"
+  local github_response="$?"
   set -e
   # This will be 1 if the SSH key has been configured correctly.
   # 255 means that an error occurred in SSH.
-  if [[ "${gitHubResponse}" -eq 255 ]]; then
+  if [[ "${github_response}" -eq 255 ]]; then
     return 1
   else
     return 0
@@ -215,4 +215,3 @@ elif [[ "$1" == "setup" ]]; then
   shift
   dev_setup "$@"
 fi
-
