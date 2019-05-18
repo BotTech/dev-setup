@@ -1,4 +1,7 @@
+adoptopenjdk
+adoptopenjdk 8
 adoptopenjdk 11
+jenv
 scala
 sbt
 intellij-idea
