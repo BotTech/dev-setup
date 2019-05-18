@@ -3,6 +3,7 @@
 set -e
 
 readonly EXIT_UNKNOWN_COMMAND=1
+readonly EXIT_MODULE_SCRIPT_FAILED=2
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
@@ -34,16 +35,9 @@ if [[ -f "${pm_file}" ]]; then
   pm_module_dir="${modules_dir}/${pm}/${os}"
 fi
 
-source_pm_functions() {
-  [[ ! -f "${pm_module_dir}/functions.shlib" ]] || source "${pm_module_dir}/functions.shlib"
-}
-
 # Helper functions available to other scripts. This only works with bash.
-unless_command_exists() {
-  command -v "$1" >/dev/null 2>&1 || { shift; "$@"; }
-}
-typeset -fx unless_command_exists
-source_pm_functions
+source "${script_dir}/functions.shlib"
+[[ ! -f "${pm_module_dir}/functions.shlib" ]] || source "${pm_module_dir}/functions.shlib"
 
 invoke_module_script() {
   local script="$1"
@@ -58,6 +52,7 @@ invoke_module_script() {
 }
 
 invoke_pm_script() {
+  local script="$1"
   if [[ -z "${pm_module_dir+x}" ]]; then
     bash "${pm_module_dir}/${script}"
   fi
@@ -65,6 +60,7 @@ invoke_pm_script() {
 
 invoke_all_modules_script() {
   local script="$1"
+  local message="$2"
   local modules_file="${config_dir}/modules"
   if [[ -f "${modules_file}" ]]; then
     local line
@@ -72,9 +68,12 @@ invoke_all_modules_script() {
       line="${line#"${line%%[![:space:]]*}"}"
       line="${line%"${line##*[![:space:]]}"}"
       if [[ -n "${line}" ]]; then
-        local module_command
         declare -a "module_command=( ${line} )"
+        printf "${message}" "${module_command[*]}"
+        set +e
         invoke_module_script "${script}" "${module_command[@]}"
+        [[ "$?" -eq 0 ]] || { 2>&1 echo "Failed!"; exit "${EXIT_MODULE_SCRIPT_FAILED}"; }
+        set -e
       fi
     done < "${modules_file}"
   fi
@@ -85,7 +84,7 @@ install_pm() {
 }
 
 install_modules() {
-  invoke_all_modules_script "install.sh"
+  invoke_all_modules_script "install.sh" "Installing %s...\n"
 }
 
 upgrade_pm() {
@@ -93,7 +92,7 @@ upgrade_pm() {
 }
 
 upgrade_modules() {
-  invoke_all_modules_script "upgrade.sh"
+  invoke_all_modules_script "upgrade.sh" "Upgrading %s...\n"
 }
 
 case "$1" in
