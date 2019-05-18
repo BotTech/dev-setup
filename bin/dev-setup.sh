@@ -46,10 +46,15 @@ fi
 # Install the modulues.
 modules_file="${config_dir}/modules"
 if [[ -f "${modules_file}" ]]; then
-  while IFS='' read -r module || [[ -n "${module}" ]]; do
-    if [[ -n "${module}" ]]; then
-      module_dir="${modules_dir}/${module}/${os}"
-      bash "${module_dir}/install.sh"
+  while IFS='' read -r line || [[ -n "${line}" ]]; do
+    line="${line#"${line%%[![:space:]]*}"}"
+    line="${line%"${line##*[![:space:]]}"}"
+    if [[ -n "${line}" ]]; then
+      declare -a "module_command=(${line})"
+      module_name="${module_command[0]}"
+      module_args=("${module_command[@]:1}")
+      module_dir="${modules_dir}/${module_name}/${os}"
+      bash "${module_dir}/install.sh" "${module_args[@]}"
     fi
   done < "${modules_file}"
 fi
