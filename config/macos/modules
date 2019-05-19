@@ -5,3 +5,6 @@ jenv
 scala
 sbt
 intellij-idea
+iterm2
+zsh
+powerline-fonts
