@@ -1,5 +1,16 @@
+if_command_exists() {
+  if ! command -v "$1" >/dev/null 2>&1; then
+    shift
+    "$@"
+  fi
+}
+typeset -fx if_command_exists
+
 unless_command_exists() {
-  command -v "$1" >/dev/null 2>&1 || { shift; "$@"; }
+  if command -v "$1" >/dev/null 2>&1; then
+    shift
+    "$@"
+  fi
 }
 typeset -fx unless_command_exists
 
