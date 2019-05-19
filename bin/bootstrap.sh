@@ -196,14 +196,14 @@ fork() {
   read -p "Enter the SSH URL to your fork: " fork_url
   shift
   local dir
-  dir="$(clone "${fork_url}" "$@")"
-  bash "${dir}/bin/init-fork.sh"
+  dir="$( clone "${fork_url}" "$@" )"
+  ( "${dir}/bin/init-fork.sh" )
 }
 
 dev_setup() {
   local dir
-  dir="$(clone "${DEV_SETUP_GIT_URL}" "$@")"
-  bash "${dir}/bin/dev-setup.sh"
+  dir="$( clone "${DEV_SETUP_GIT_URL}" "$@" )"
+  ( "${dir}/bin/dev-setup.sh" )
 }
 
 setup_github

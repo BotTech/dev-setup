@@ -31,11 +31,12 @@ modules_dir="${script_dir}/../modules"
 
 pm_file="${config_dir}/pm"
 if [[ -f "${pm_file}" ]]; then
-  pm="$(<"${pm_file}")"
+  pm="$( <"${pm_file}" )"
   pm_module_dir="${modules_dir}/${pm}/${os}"
 fi
 
 # Helper functions available to other scripts. This only works with bash.
+# TODO: Source these as normal functions within the subshells.
 source "${script_dir}/functions.shlib"
 [[ ! -f "${pm_module_dir}/functions.shlib" ]] || source "${pm_module_dir}/functions.shlib"
 
@@ -45,7 +46,10 @@ invoke_module_script() {
   local module_dir="${modules_dir}/${module_name}/${os}"
   local module_script="${module_dir}/${script}"
   if [[ -f "${module_script}" ]]; then
-    bash "${module_script}" "${@:3}"
+    (
+      cd "${module_dir}"
+      "${module_script}" "${@:3}"
+    )
   else
     2>&1 echo "Module ${module_name} is missing script ${script} (${module_script})."
   fi
@@ -54,7 +58,10 @@ invoke_module_script() {
 invoke_pm_script() {
   local script="$1"
   if [[ -z "${pm_module_dir+x}" ]]; then
-    bash "${pm_module_dir}/${script}"
+    (
+      cd "${pm_module_dir}"
+      "${pm_module_dir}/${script}"
+    )
   fi
 }
 
@@ -95,14 +102,42 @@ upgrade_modules() {
   invoke_all_modules_script "upgrade.sh" "Upgrading %s...\n"
 }
 
+configure_modules() {
+  local modules_file="${config_dir}/modules"
+  if [[ -f "${modules_file}" ]]; then
+    local line
+    while IFS='' read -r line || [[ -n "${line}" ]]; do
+      line="${line#"${line%%[![:space:]]*}"}"
+      line="${line%"${line##*[![:space:]]}"}"
+      if [[ -n "${line}" ]]; then
+        declare -a "module_command=( ${line} )"
+        module="${module_command[0]}"
+        module_config_dir="${config_dir}/module-config/${module}"
+        if [[ -d "${module_config_dir}" ]]; then
+          echo "Configuring ${module}..."
+          (
+            set -ex
+            cd "${module_config_dir}"
+            "${module_config_dir}/configure.sh"
+          )
+        fi
+      fi
+    done < "${modules_file}"
+  fi
+}
+
 case "$1" in
   ""|install)
     install_pm
     install_modules
+    configure_modules
     ;;
   upgrade)
     upgrade_pm
     upgrade_modules
+    ;;
+  reconfigure)
+    configure_modules
     ;;
   *)
     2>&1 echo "Unknown command: $1"
