@@ -1,5 +1,5 @@
 if_command_exists() {
-  if ! command -v "$1" >/dev/null 2>&1; then
+  if command -v "$1" >/dev/null 2>&1; then
     shift
     "$@"
   fi
@@ -7,17 +7,42 @@ if_command_exists() {
 typeset -fx if_command_exists
 
 unless_command_exists() {
-  if command -v "$1" >/dev/null 2>&1; then
+  if ! command -v "$1" >/dev/null 2>&1; then
     shift
     "$@"
   fi
 }
 typeset -fx unless_command_exists
 
-add_to_bash_profile() {
-  if ! grep -qxF "$1" ~/.bash_profile; then
-    echo "$1" >> ~/.bash_profile
-    echo "~/.bash_profile has been modified. To reload run: source ~/.bash_profile"
+add_to_init_script() {
+  local script="$1"
+  local search_text="$2"
+  local text_to_add="${3:-${search_text}}"
+  if [[ ! -f "${script}" ]] || ! grep -qF "${search_text}" "${script}"; then
+    echo $'\n### Automatically added by dev-setup. ###' >> "${script}"
+    echo "${text_to_add}" >> "${script}"
+    echo "${script} has been modified. Login to your shell again or execute this script in order to activate the changes."
   fi
 }
+typeset -fx add_to_init_script
+
+add_to_tcsh_login() {
+  add_to_init_script ~/.login "$@"
+}
+typeset -fx add_to_tcsh_login
+
+add_to_zsh_rc() {
+  add_to_init_script ~/.zshrc "$@"
+}
+typeset -fx add_to_zsh_rc
+
+add_to_bash_profile() {
+  add_to_init_script ~/.bash_profile "$@"
+}
 typeset -fx add_to_bash_profile
+
+add_to_fish_config() {
+  mkdir -p ~/.config/fish
+  add_to_init_script ~/.config/fish/config.fish "$@"
+}
+typeset -fx add_to_fish_config
