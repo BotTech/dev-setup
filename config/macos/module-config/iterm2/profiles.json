@@ -1,35 +1,40 @@
 {
   "Profiles": [
     {
-      "Ansi 4 Color": {
-        "Green Component": 0,
-        "Red Component": 0,
+      "Ansi 7 Color": {
+        "Green Component": 0.73333334922790527,
+        "Red Component": 0.73333334922790527,
         "Blue Component": 0.73333334922790527
       },
       "Tags": [
+        "Dynamic"
       ],
       "Ansi 12 Color": {
         "Green Component": 0.3333333432674408,
         "Red Component": 0.3333333432674408,
         "Blue Component": 1
       },
-      "Normal Font": "MesloLGSForPowerline-Regular 14",
-      "Ansi 5 Color": {
-        "Green Component": 0,
-        "Red Component": 0.73333334922790527,
-        "Blue Component": 0.73333334922790527
+      "Ansi 8 Color": {
+        "Green Component": 0.3333333432674408,
+        "Red Component": 0.3333333432674408,
+        "Blue Component": 0.3333333432674408
+      },
+      "Ansi 9 Color": {
+        "Green Component": 0.3333333432674408,
+        "Red Component": 1,
+        "Blue Component": 0.3333333432674408
       },
       "Bold Color": {
         "Green Component": 1,
         "Red Component": 1,
         "Blue Component": 1
       },
-      "Use Non-ASCII Font": false,
-      "Ansi 2 Color": {
-        "Green Component": 0.73333334922790527,
-        "Red Component": 0,
-        "Blue Component": 0
+      "Ansi 5 Color": {
+        "Green Component": 0,
+        "Red Component": 0.73333334922790527,
+        "Blue Component": 0.73333334922790527
       },
+      "Use Non-ASCII Font": false,
       "Rows": 25,
       "Default Bookmark": "No",
       "Non-ASCII Anti Aliased": true,
@@ -56,7 +61,6 @@
         "Red Component": 0.73333334922790527,
         "Blue Component": 0.73333334922790527
       },
-      "Working Directory": "\/Users\/jasonpickens",
       "Blinking Cursor": false,
       "Disable Window Resizing": true,
       "Sync Title": false,
@@ -291,9 +295,6 @@
         "Red Component": 0.73333334922790527,
         "Blue Component": 0.73333334922790527
       },
-      "Transparency": 0,
-      "Guid": "F457A5F4-EA90-459D-A7C0-A6D49D5F2F01",
-      "Custom Directory": "No",
       "Ansi 0 Color": {
         "Green Component": 0,
         "Red Component": 0,
@@ -310,20 +311,19 @@
         "Red Component": 0.73333334922790527,
         "Blue Component": 0
       },
-      "Ansi 7 Color": {
+      "Transparency": 0,
+      "Guid": "2DF664B5-A7AA-426A-80B6-BEA66786C6E9",
+      "Ansi 2 Color": {
         "Green Component": 0.73333334922790527,
-        "Red Component": 0.73333334922790527,
+        "Red Component": 0,
+        "Blue Component": 0
+      },
+      "Custom Directory": "No",
+      "Normal Font": "MesloLGSForPowerline-Regular 14",
+      "Ansi 4 Color": {
+        "Green Component": 0,
+        "Red Component": 0,
         "Blue Component": 0.73333334922790527
-      },
-      "Ansi 8 Color": {
-        "Green Component": 0.3333333432674408,
-        "Red Component": 0.3333333432674408,
-        "Blue Component": 0.3333333432674408
-      },
-      "Ansi 9 Color": {
-        "Green Component": 0.3333333432674408,
-        "Red Component": 1,
-        "Blue Component": 0.3333333432674408
       },
       "Right Option Key Sends": 0,
       "Ansi 6 Color": {

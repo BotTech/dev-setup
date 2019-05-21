@@ -5,6 +5,8 @@ jenv
 scala
 sbt
 intellij-idea
-iterm2
 zsh
 powerline-fonts
+
+# This should go last so that it is configured last.
+iterm2
