@@ -26,8 +26,10 @@ case "${OSTYPE}" in
     ;;
 esac
 
-config_dir="${script_dir}/../config/${os}"
-modules_dir="${script_dir}/../modules"
+readonly config_dir="${script_dir}/../config/${os}"
+readonly modules_dir="${script_dir}/../modules"
+readonly modules_file="${config_dir}/modules"
+readonly comment_regex="^[[:space:]]*#.*"
 
 pm_file="${config_dir}/pm"
 if [[ -f "${pm_file}" ]]; then
@@ -46,10 +48,13 @@ invoke_module_script() {
   local module_dir="${modules_dir}/${module_name}/${os}"
   local module_script="${module_dir}/${script}"
   if [[ -f "${module_script}" ]]; then
+    set +e
     (
       cd "${module_dir}"
       "${module_script}" "${@:3}"
     )
+    [[ "$?" -eq 0 ]] || { 2>&1 echo "Failed!"; exit "${EXIT_MODULE_SCRIPT_FAILED}"; }
+    set -e
   else
     2>&1 echo "Module ${module_name} is missing script ${script} (${module_script})."
   fi
@@ -68,19 +73,15 @@ invoke_pm_script() {
 invoke_all_modules_script() {
   local script="$1"
   local message="$2"
-  local modules_file="${config_dir}/modules"
   if [[ -f "${modules_file}" ]]; then
     local line
     while IFS='' read -r line || [[ -n "${line}" ]]; do
       line="${line#"${line%%[![:space:]]*}"}"
       line="${line%"${line##*[![:space:]]}"}"
-      if [[ -n "${line}" ]]; then
+      if [[ -n "${line}" && ! "${line}" =~ $comment_regex ]]; then
         declare -a "module_command=( ${line} )"
         printf "${message}" "${module_command[*]}"
-        set +e
         invoke_module_script "${script}" "${module_command[@]}"
-        [[ "$?" -eq 0 ]] || { 2>&1 echo "Failed!"; exit "${EXIT_MODULE_SCRIPT_FAILED}"; }
-        set -e
       fi
     done < "${modules_file}"
   fi
@@ -103,21 +104,25 @@ upgrade_modules() {
 }
 
 configure_modules() {
-  local modules_file="${config_dir}/modules"
   if [[ -f "${modules_file}" ]]; then
     local line
     while IFS='' read -r line || [[ -n "${line}" ]]; do
       line="${line#"${line%%[![:space:]]*}"}"
       line="${line%"${line##*[![:space:]]}"}"
-      if [[ -n "${line}" ]]; then
+      if [[ -n "${line}" && ! "${line}" =~ $comment_regex ]]; then
         declare -a "module_command=( ${line} )"
-        module="${module_command[0]}"
-        module_config_dir="${config_dir}/module-config/${module}"
+        local module_name="${module_command[0]}"
+        local module_dir="${modules_dir}/${module_name}/${os}"
+        local module_config_dir="${config_dir}/module-config/${module_name}"
+        if [[ -f "${module_dir}/configure.sh" ]]; then
+          echo "Configuring ${module_name}..."
+          invoke_module_script "configure.sh" "${module_name}"
+        fi
         if [[ -d "${module_config_dir}" ]]; then
-          echo "Configuring ${module}..."
+          [[ -f "${module_dir}/configure.sh" ]] || echo "Configuring ${module_name}..."
           (
-            set -ex
             cd "${module_config_dir}"
+            export PATH="${PATH}:${module_dir}"
             "${module_config_dir}/configure.sh"
           )
         fi
