@@ -11,11 +11,11 @@ add_shell_integration() {
   local add_function="$2"
   local url="https://iterm2.com/misc/${shell}_startup.in"
   local script_name=".iterm2_shell_integration.${shell}"
-  local text_to_add=$'# iTerm Shell Integration.'\
+  local text_to_add=$'# iTerm2 Shell Integration.\n'\
 $'# This should go at the end.\n'\
 'test -e "${HOME}/'"${script_name}"'" && source "${HOME}/'"${script_name}"'"'
   text_to_add="${3:-${text_to_add}}"
-  if_command_exists "${shell}" curl -fsSL "${url}" > ~"/${script_name}"
+  if_command_exists "${shell}" curl -fsSL "${url}" > ~/"${script_name}"
   if_command_exists "${shell}" "${add_function}" "iterm2_shell_integration" "${text_to_add}"
 }
 
@@ -24,7 +24,7 @@ add_shell_integration zsh add_to_zsh_rc
 add_shell_integration bash add_to_bash_profile
 
 # Fish is just difficult...
-fish_text_to_add=$'# iTerm Shell Integration.'\
+fish_text_to_add=$'# iTerm2 Shell Integration.\n'\
 $'# This should go at the end.\n'\
 'test -e {$HOME}/.iterm2_shell_integration.fish ; and source {$HOME}/.iterm2_shell_integration.fish'
 
