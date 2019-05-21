@@ -1,12 +1,24 @@
+# Languages
 adoptopenjdk
 adoptopenjdk 8
 adoptopenjdk 11
 jenv
 scala
+
+# Build tools and IDEs
 sbt
 intellij-idea
+
+# Shells
 zsh
+oh-my-zsh
 powerline-fonts
+
+# Utilities
+tunnelblick
+docker
+docker-compose
+subversion
 
 # This should go last so that it is configured last.
 iterm2
