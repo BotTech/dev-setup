@@ -2,6 +2,7 @@
 
 set -e
 
+# TODO: Make adding profiles part of the built-in module configuration.
 mkdir -p ~/"Library/Application Support/iTerm2/DynamicProfiles"
 cp profiles.json ~/"Library/Application Support/iTerm2/DynamicProfiles/"
 # TODO: Find a way to script this.
