@@ -4,6 +4,7 @@ set -e
 
 readonly DEV_SETUP_GIT_BRANCH=master
 readonly DEV_SETUP_GIT_URL=git@github.com:BotTech/dev-setup.git
+readonly DEV_SETUP_HTTP_URL=https://github.com/BotTech/dev-setup
 
 readonly EXIT_CANNOT_PARSE_SSH_KEYGEN=1
 readonly EXIT_GITHUB_SSH_FAILED=2
@@ -188,7 +189,7 @@ clone() {
 }
 
 fork() {
-  local url="${1:-${DEV_SETUP_GIT_URL}}"
+  local url="${1:-${DEV_SETUP_HTTP_URL}}"
   echo "Fork the repository (${url})."
   open_browser "${url}"
   read -p "Press enter when done..."

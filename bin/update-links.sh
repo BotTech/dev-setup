@@ -27,6 +27,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 update_links_mac() {
   sed -i "" "s/${previous_remote_http_url}/${current_remote_http_url}/g" "${script_dir}/update-links.sh"
+  sed -i "" "s/${previous_remote_http_url}/${current_remote_http_url}/g" "${script_dir}/bootstrap.sh"
   sed -i "" "s/${previous_remote_raw_url}/${current_remote_raw_url}/g" "${script_dir}/update-links.sh"
   sed -i "" "s/${previous_remote_raw_url}/${current_remote_raw_url}/g" "${script_dir}/../README.md"
   sed -i "" "s/${previous_remote_git_url}/${current_remote_git_url}/g" "${script_dir}/bootstrap.sh"
@@ -38,6 +39,7 @@ update_links_mac() {
 # TODO: De-duplicate these.
 update_links_linux() {
   sed -i "s/${previous_remote_http_url}/${current_remote_http_url}/g" "${script_dir}/update-links.sh"
+  sed -i "s/${previous_remote_http_url}/${current_remote_http_url}/g" "${script_dir}/bootstrap.sh"
   sed -i "s/${previous_remote_raw_url}/${current_remote_raw_url}/g" "${script_dir}/update-links.sh"
   sed -i "s/${previous_remote_raw_url}/${current_remote_raw_url}/g" "${script_dir}/../README.md"
   sed -i "s/${previous_remote_git_url}/${current_remote_git_url}/g" "${script_dir}/bootstrap.sh"
