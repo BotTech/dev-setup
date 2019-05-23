@@ -189,13 +189,16 @@ clone() {
 }
 
 fork() {
-  local url="${1:-${DEV_SETUP_HTTP_URL}}"
+  local url="${DEV_SETUP_HTTP_URL}"
+  if [[ "$#" -eq 1 ]]; then
+    url="$1"
+    shift
+  fi
   echo "Fork the repository (${url})."
   open_browser "${url}"
   read -p "Press enter when done..."
   local fork_url
   read -p "Enter the SSH URL to your fork: " fork_url
-  shift
   local dir
   dir="$( clone "${fork_url}" "$@" )"
   ( "${dir}/bin/init-fork.sh" )
