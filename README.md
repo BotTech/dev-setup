@@ -8,7 +8,7 @@ This repository contains everything that you need to automatically setup a devel
 
 ### Setting up your development environment
 
-ℹ️ EXAMPLE: This is just an exmaple to demonstrate how this repository can be used once configured. Do not actually follow these instructions but instead skip ahead to [creating a fork](#creating-a-fork).
+ℹ️ EXAMPLE: This is just an example to demonstrate how this repository can be used once configured. Do not actually follow these instructions but instead skip ahead to [creating a fork](#creating-a-fork).
 
 ⚠️ WARNING: These commands will execute code on your machine. Never run code that you do not trust. You should read the [code](https://raw.githubusercontent.com/BotTech/dev-setup/d403b0b141451b810ce8c6635316f1f13f0e96f0/bin/bootstrap.sh) (also check that the URL matches the one above).
 
