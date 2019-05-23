@@ -3,7 +3,7 @@
 set -e
 
 readonly PREVIOUS_REMOTE_HTTP_URL="https://github.com/BotTech/dev-setup.git"
-readonly PREVIOUS_COMMIT=22e769ff93d510e2eff501a4eae7e4063f9e9e82
+readonly PREVIOUS_COMMIT=33a2340fbd24a47ab0d59fb773b0d168dac16747
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
