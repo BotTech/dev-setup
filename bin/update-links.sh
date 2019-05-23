@@ -23,7 +23,7 @@ current_remote_http_url="${current_remote_url%\.git}"
 current_remote_http_url="$(escape_slashes "${current_remote_http_url}")"
 current_remote_raw_url="${current_remote_http_url/github.com/raw.githubusercontent.com}"
 current_remote_git_url="${current_remote_http_url/https:\\\/\\\/github.com\\\//git@github.com:}"
-current_commit="$(git rev-parse HEAD)"
+current_commit="$(git -C "${script_dir}" rev-parse HEAD)"
 
 update_links_mac() {
   sed -i "" "s/${previous_remote_http_url}/${current_remote_http_url}/g" "${script_dir}/update-links.sh"
