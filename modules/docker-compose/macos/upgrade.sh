@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-brew_cask_install_or_upgrade docker-compose
+brew_install_or_upgrade docker-compose
