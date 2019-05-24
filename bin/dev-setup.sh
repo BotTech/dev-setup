@@ -49,16 +49,16 @@ source "${SCRIPT_DIR}/functions.shlib"
 
 invoke_module_script() {
   local script="$1"
-  local module_name="$2"
-  local modules_dir="$3"
-  local required="${4:---required=true}"
+  local modules_dir="$2"
+  local required="$3"
+  local module_name="$4"
   local module_dir="${modules_dir}/${module_name}/${OS}"
   local module_script="${module_dir}/${script}"
   if [[ -f "${module_script}" ]]; then
     set +e
     (
       cd "${module_dir}"
-      "${module_script}" "${@:3}"
+      "${module_script}" "${@:5}"
     )
     [[ "$?" -eq 0 ]] || { 2>&1 echo "Failed!"; exit "${EXIT_MODULE_SCRIPT_FAILED}"; }
     set -e
@@ -91,7 +91,7 @@ invoke_all_modules_script() {
       if [[ -n "${line}" && ! "${line}" =~ $COMMENT_REGEX ]]; then
         declare -a "module_command=( ${line} )"
         printf "${message}" "${module_command[*]}"
-        invoke_module_script "${script}" "${module_command[@]}" "${modules_dir}" "${required}"
+        invoke_module_script "${script}" "${modules_dir}" "${required}" "${module_command[@]}"
       fi
     done < "${modules_file}"
   fi
@@ -128,10 +128,10 @@ configure_modules() {
         declare -a "module_command=( ${line} )"
         local module_name="${module_command[0]}"
         local module_dir="${modules_dir}/${module_name}/${OS}"
-        local module_config_dir="${module_config_dir}/${module_name}"
+        local module_config_dir="${modules_config_dir}/${module_name}"
         if [[ -f "${module_dir}/configure.sh" ]]; then
           echo "Configuring ${module_name}..."
-          invoke_module_script "configure.sh" "${module_name}" "${modules_dir}"
+          invoke_module_script "configure.sh" "${modules_dir}" "--required=false" "${module_name}"
         fi
         if [[ -d "${module_config_dir}" ]]; then
           [[ -f "${module_dir}/configure.sh" ]] || echo "Configuring ${module_name}..."
