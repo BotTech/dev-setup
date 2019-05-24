@@ -16,10 +16,9 @@ powerline-fonts
 antibody
 
 # Utilities
-tunnelblick
 docker
 docker-compose
-subversion
+postman
 
 # This should go last so that it is configured last.
 iterm2
