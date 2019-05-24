@@ -2,8 +2,10 @@
 adoptopenjdk
 adoptopenjdk 8
 adoptopenjdk 11
-jenv
 scala
+
+# Put this after any JVMs.
+jenv
 
 # Build tools and IDEs
 sbt
