@@ -1,12 +1,15 @@
-zsh-users/docker
-zsh-users/git
-zsh-users/zsh-completions
+caarlos0/open-pr kind:path
+robbyrussell/oh-my-zsh path:plugins/aws
+robbyrussell/oh-my-zsh path:plugins/docker
+robbyrussell/oh-my-zsh path:plugins/docker-compose
+robbyrussell/oh-my-zsh path:plugins/dotenv
+robbyrussell/oh-my-zsh path:plugins/git
+robbyrussell/oh-my-zsh path:plugins/jenv
+robbyrussell/oh-my-zsh path:plugins/sbt
+robbyrussell/oh-my-zsh path:plugins/scala
 zsh-users/zsh-autosuggestions
-zsh-users/zsh-history-substring-search
+zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
 
-robbyrussell/oh-my-zsh path:plugins/aws
-
-caarlos0/open-pr kind:path
-
-djui/alias-tips
+# This should be last
+zsh-users/zsh-history-substring-search

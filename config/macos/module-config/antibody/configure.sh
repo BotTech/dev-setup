@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# TODO: Make this so that it doesn't overwrite existing plugins.
 # TODO: Make adding profiles part of the built-in module configuration.
 cp .zsh_plugins.txt ~/.zsh_plugins.txt
 antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh
