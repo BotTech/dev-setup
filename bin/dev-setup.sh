@@ -5,7 +5,7 @@ set -e
 readonly EXIT_UNKNOWN_COMMAND=1
 readonly EXIT_MODULE_SCRIPT_FAILED=2
 
-script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
 case "${OSTYPE}" in
   linux-gnu)
@@ -14,7 +14,7 @@ case "${OSTYPE}" in
     exit 1
     ;;
   darwin*)
-    os="macos"
+    readonly OS="macos"
     ;;
   cygwin|msys)
     # Should we force the use of PowerShell at this point?
@@ -22,30 +22,37 @@ case "${OSTYPE}" in
     exit 1
     ;;
   *)
-    os="${OSTYPE}"
+    readonly OS="${OSTYPE}"
     ;;
 esac
 
-readonly config_dir="${script_dir}/../config/${os}"
-readonly modules_dir="${script_dir}/../modules"
-readonly modules_file="${config_dir}/modules"
-readonly comment_regex="^[[:space:]]*#.*"
+readonly ROOT_DIR="${SCRIPT_DIR}/.."
+readonly CONFIG_DIR="${ROOT_DIR}/config/${OS}"
+readonly MODULES_DIR="${ROOT_DIR}/modules"
+readonly MODULES_FILE="${CONFIG_DIR}/modules"
+readonly MODULES_CONFIG_DIR="${CONFIG_DIR}/module-config"
+readonly CUSTOM_MODULES_DIR="${ROOT_DIR}/custom-modules"
+readonly CUSTOM_MODULES_FILE="${CONFIG_DIR}/custom-modules"
+readonly CUSTOM_MODULES_CONFIG_DIR="${CONFIG_DIR}/custom-module-config"
+readonly COMMENT_REGEX="^[[:space:]]*#.*"
 
-pm_file="${config_dir}/pm"
-if [[ -f "${pm_file}" ]]; then
-  pm="$( <"${pm_file}" )"
-  pm_module_dir="${modules_dir}/${pm}/${os}"
+readonly PM_FILE="${CONFIG_DIR}/pm"
+if [[ -f "${PM_FILE}" ]]; then
+  readonly PM="$( <"${PM_FILE}" )"
+  readonly PM_MODULE_DIR="${MODULES_DIR}/${PM}/${OS}"
 fi
 
 # Helper functions available to other scripts. This only works with bash.
 # TODO: Source these as normal functions within the subshells.
-source "${script_dir}/functions.shlib"
-[[ ! -f "${pm_module_dir}/functions.shlib" ]] || source "${pm_module_dir}/functions.shlib"
+source "${SCRIPT_DIR}/functions.shlib"
+[[ ! -f "${PM_MODULE_DIR}/functions.shlib" ]] || source "${PM_MODULE_DIR}/functions.shlib"
 
 invoke_module_script() {
   local script="$1"
   local module_name="$2"
-  local module_dir="${modules_dir}/${module_name}/${os}"
+  local modules_dir="$3"
+  local required="${4:---required=true}"
+  local module_dir="${modules_dir}/${module_name}/${OS}"
   local module_script="${module_dir}/${script}"
   if [[ -f "${module_script}" ]]; then
     set +e
@@ -55,33 +62,36 @@ invoke_module_script() {
     )
     [[ "$?" -eq 0 ]] || { 2>&1 echo "Failed!"; exit "${EXIT_MODULE_SCRIPT_FAILED}"; }
     set -e
-  else
+  elif [[ "${required}" != "--required=false" ]]; then
     2>&1 echo "Module ${module_name} is missing script ${script} (${module_script})."
   fi
 }
 
 invoke_pm_script() {
   local script="$1"
-  if [[ -z "${pm_module_dir+x}" ]]; then
+  if [[ -z "${PM_MODULE_DIR+x}" ]]; then
     (
-      cd "${pm_module_dir}"
-      "${pm_module_dir}/${script}"
+      cd "${PM_MODULE_DIR}"
+      "${PM_MODULE_DIR}/${script}"
     )
   fi
 }
 
 invoke_all_modules_script() {
   local script="$1"
-  local message="$2"
+  local modules_file="$2"
+  local modules_dir="$3"
+  local message="$4"
+  local required="$5"
   if [[ -f "${modules_file}" ]]; then
     local line
     while IFS='' read -r line || [[ -n "${line}" ]]; do
       line="${line#"${line%%[![:space:]]*}"}"
       line="${line%"${line##*[![:space:]]}"}"
-      if [[ -n "${line}" && ! "${line}" =~ $comment_regex ]]; then
+      if [[ -n "${line}" && ! "${line}" =~ $COMMENT_REGEX ]]; then
         declare -a "module_command=( ${line} )"
         printf "${message}" "${module_command[*]}"
-        invoke_module_script "${script}" "${module_command[@]}"
+        invoke_module_script "${script}" "${module_command[@]}" "${modules_dir}" "${required}"
       fi
     done < "${modules_file}"
   fi
@@ -91,32 +101,37 @@ install_pm() {
   invoke_pm_script "install.sh"
 }
 
-install_modules() {
-  invoke_all_modules_script "install.sh" "Installing %s...\n"
+install_all_modules() {
+  invoke_all_modules_script "install.sh" "${MODULES_FILE}" "${MODULES_DIR}" "Installing %s...\n" "--required=true"
+  invoke_all_modules_script "install.sh" "${CUSTOM_MODULES_FILE}" "${CUSTOM_MODULES_DIR}" "Installing custom %s...\n" "--required=false"
 }
 
 upgrade_pm() {
   invoke_pm_script "upgrade.sh"
 }
 
-upgrade_modules() {
-  invoke_all_modules_script "upgrade.sh" "Upgrading %s...\n"
+upgrade_all_modules() {
+  invoke_all_modules_script "upgrade.sh" "${MODULES_FILE}" "${MODULES_DIR}" "Upgrading %s...\n" "--required=true"
+  invoke_all_modules_script "upgrade.sh" "${CUSTOM_MODULES_FILE}" "${CUSTOM_MODULES_DIR}" "Upgrading custom %s...\n" "--required=false"
 }
 
 configure_modules() {
+  local modules_file="$1"
+  local modules_dir="$2"
+  local modules_config_dir="$3"
   if [[ -f "${modules_file}" ]]; then
     local line
     while IFS='' read -r line || [[ -n "${line}" ]]; do
       line="${line#"${line%%[![:space:]]*}"}"
       line="${line%"${line##*[![:space:]]}"}"
-      if [[ -n "${line}" && ! "${line}" =~ $comment_regex ]]; then
+      if [[ -n "${line}" && ! "${line}" =~ $COMMENT_REGEX ]]; then
         declare -a "module_command=( ${line} )"
         local module_name="${module_command[0]}"
-        local module_dir="${modules_dir}/${module_name}/${os}"
-        local module_config_dir="${config_dir}/module-config/${module_name}"
+        local module_dir="${modules_dir}/${module_name}/${OS}"
+        local module_config_dir="${module_config_dir}/${module_name}"
         if [[ -f "${module_dir}/configure.sh" ]]; then
           echo "Configuring ${module_name}..."
-          invoke_module_script "configure.sh" "${module_name}"
+          invoke_module_script "configure.sh" "${module_name}" "${modules_dir}"
         fi
         if [[ -d "${module_config_dir}" ]]; then
           [[ -f "${module_dir}/configure.sh" ]] || echo "Configuring ${module_name}..."
@@ -131,18 +146,24 @@ configure_modules() {
   fi
 }
 
+configure_all_modules() {
+  configure_modules "${MODULES_FILE}" "${MODULES_DIR}" "${MODULES_CONFIG_DIR}"
+  configure_modules "${CUSTOM_MODULES_FILE}" "${CUSTOM_MODULES_DIR}" "${CUSTOM_MODULES_CONFIG_DIR}"
+}
+
 case "$1" in
   ""|install)
     install_pm
-    install_modules
-    configure_modules
+    install_all_modules
+    configure_all_modules
     ;;
   upgrade)
     upgrade_pm
-    upgrade_modules
+    upgrade_all_modules
+    # TODO: Should this configure the modules?
     ;;
   reconfigure)
-    configure_modules
+    configure_all_modules
     ;;
   *)
     2>&1 echo "Unknown command: $1"
