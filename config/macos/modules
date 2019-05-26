@@ -21,6 +21,8 @@ antibody
 docker
 docker-compose
 postman
+gimp
+wpsoffice
 
 # This should go last so that it is configured last.
 iterm2
