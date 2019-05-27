@@ -14,6 +14,16 @@ unless_command_exists() {
 }
 typeset -fx unless_command_exists
 
+add_to_file() {
+  local file="$1"
+  local search_text="$2"
+  local text_to_add="${3:-${search_text}}"
+  if [[ ! -f "${file}" ]] || ! grep -qF "${search_text}" "${file}"; then
+    echo "${text_to_add}" >> "${file}"
+  fi
+}
+typeset -fx add_to_file
+
 add_to_init_script() {
   local script="$1"
   local search_text="$2"
