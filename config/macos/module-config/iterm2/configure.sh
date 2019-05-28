@@ -12,4 +12,4 @@ if [[ ! -f ~/"Library/Application Support/iTerm2/DynamicProfiles/profiles.json" 
   echo 'You need to set this as the Default profile and/or delete the existing Default profile.'
 fi
 
-configure_shell_integration.sh
+configure-shell-integration.sh
