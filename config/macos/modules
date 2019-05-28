@@ -8,10 +8,10 @@ scala
 jenv
 
 # Build tools and IDEs
-sbt
 intellij-idea
+sbt
 
-# Shells
+# Shell stuff
 zsh
 oh-my-zsh
 powerline-fonts
@@ -21,8 +21,9 @@ antibody
 aws-cli
 docker
 docker-compose
-postman
 gimp
+git
+postman
 
 # This should go last so that it is configured last.
 iterm2
