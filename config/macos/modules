@@ -23,6 +23,7 @@ docker
 docker-compose
 gimp
 git
+gitter
 postman
 
 # This should go last so that it is configured last.
