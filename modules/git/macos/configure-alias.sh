@@ -8,7 +8,7 @@ description="$2"
 alias="alias.config${suffix}"
 git config --get "${alias}" > /dev/null
 if [[ "$?" -ne 0 ]]; then
-  echo "Enter your ${description} details"
+  echo "Enter your ${description} git details"
   read -p 'User Name: ' userName < /dev/tty
   read -p 'Email Address: ' userEmail < /dev/tty
   git config --global "${alias}" "!git config user.name \"${userName}\" && git config user.email \"${userEmail}\""
