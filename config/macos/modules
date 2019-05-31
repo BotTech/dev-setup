@@ -3,7 +3,6 @@ adoptopenjdk
 adoptopenjdk 8
 adoptopenjdk 11
 scala
-node
 
 # Put this after any JVMs.
 jenv
