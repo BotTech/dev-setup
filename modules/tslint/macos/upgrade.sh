@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-npm upgrade tslint --global
+npm upgrade typescript tslint --global
