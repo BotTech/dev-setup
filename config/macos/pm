@@ -1,4 +1,1 @@
 homebrew
-
-# This needs to come after homebrew since we will use that to install npm.
-npm

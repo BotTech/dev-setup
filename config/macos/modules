@@ -3,6 +3,7 @@ adoptopenjdk
 adoptopenjdk 8
 adoptopenjdk 11
 scala
+node
 
 # Put this after any JVMs.
 jenv
@@ -10,6 +11,7 @@ jenv
 # Build tools and IDEs
 intellij-idea
 sbt
+google-clasp
 
 # Shell stuff
 zsh
