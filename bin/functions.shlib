@@ -18,6 +18,7 @@ add_to_file() {
   local file="$1"
   local search_text="$2"
   local text_to_add="${3:-${search_text}}"
+  mkdir -p "$(dirname "${file}")"
   if [[ ! -f "${file}" ]] || ! grep -qF "${search_text}" "${file}"; then
     echo "${text_to_add}" >> "${file}"
   fi
@@ -28,6 +29,7 @@ add_to_init_script() {
   local script="$1"
   local search_text="$2"
   local text_to_add="${3:-${search_text}}"
+  mkdir -p "$(dirname "${script}")"
   if [[ ! -f "${script}" ]] || ! grep -qF "${search_text}" "${script}"; then
     echo $'\n### Automatically added by dev-setup. ###' >> "${script}"
     echo "${text_to_add}" >> "${script}"
