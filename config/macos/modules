@@ -1,25 +1,28 @@
-# Languages and Runtimes
+## Languages and Runtimes
 adoptopenjdk
 adoptopenjdk 8
 adoptopenjdk 11
 scala
 node
 
+## Version managers
+# Don't forget to add any ZSH plugins for these.
 # Put this after any JVMs.
 jenv
+nvm
 
-# Build tools and IDEs
+## Build tools and IDEs
 intellij-idea
 sbt
 google-clasp
 
-# Shell stuff
+## Shell stuff
 zsh
 oh-my-zsh
 powerline-fonts
 antibody
 
-# Utilities
+## Utilities
 aws-cli
 docker
 docker-compose
@@ -29,5 +32,5 @@ gitter
 postman
 tslint
 
-# This should go last so that it is configured last.
+## This should go last so that it is configured last.
 iterm2

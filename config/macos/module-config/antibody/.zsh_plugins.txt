@@ -5,6 +5,7 @@ robbyrussell/oh-my-zsh path:plugins/docker-compose
 robbyrussell/oh-my-zsh path:plugins/dotenv
 robbyrussell/oh-my-zsh path:plugins/git
 robbyrussell/oh-my-zsh path:plugins/jenv
+robbyrussell/oh-my-zsh path:plugins/nvm
 robbyrussell/oh-my-zsh path:plugins/sbt
 robbyrussell/oh-my-zsh path:plugins/scala
 zsh-users/zsh-autosuggestions
