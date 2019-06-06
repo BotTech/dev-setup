@@ -10,6 +10,7 @@ node
 # Put this after any JVMs.
 jenv
 nvm
+tfenv
 
 ## Build tools and IDEs
 intellij-idea
