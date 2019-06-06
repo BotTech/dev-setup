@@ -24,6 +24,7 @@ antibody
 
 ## Utilities
 aws-cli
+beyond-compare
 docker
 docker-compose
 gimp
