@@ -30,6 +30,7 @@ gimp
 git
 gitter
 postman
+terraform
 tslint
 
 ## This should go last so that it is configured last.
