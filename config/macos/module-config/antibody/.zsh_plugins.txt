@@ -1,4 +1,6 @@
 caarlos0/open-pr kind:path
+
+robbyrussell/oh-my-zsh
 robbyrussell/oh-my-zsh path:plugins/aws
 robbyrussell/oh-my-zsh path:plugins/docker
 robbyrussell/oh-my-zsh path:plugins/docker-compose
@@ -8,9 +10,10 @@ robbyrussell/oh-my-zsh path:plugins/jenv
 robbyrussell/oh-my-zsh path:plugins/nvm
 robbyrussell/oh-my-zsh path:plugins/sbt
 robbyrussell/oh-my-zsh path:plugins/scala
+
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
 
 # This should be last
-zsh-users/zsh-history-substring-search
+robbyrussell/oh-my-zsh path:plugins/history-substring-search
