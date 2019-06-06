@@ -58,3 +58,10 @@ add_to_fish_config() {
   add_to_init_script ~/.config/fish/config.fish "$@"
 }
 typeset -fx add_to_fish_config
+
+# TODO: This shouldn't be here. NPM should be a package manager but we don't support multiple package managers.
+npm_install_global() {
+  local package="$1"
+  npm list --global "${package}" || npm install --global "${package}"
+}
+typeset -fx npm_install_global
