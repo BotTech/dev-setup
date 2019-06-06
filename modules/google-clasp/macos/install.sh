@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 # TODO: This isn't macOS specific.
-npm install --global @google/clasp
+npm_install_global @google/clasp

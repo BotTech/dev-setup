@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 # TODO: This isn't macOS specific.
-npm install typescript --global
+npm_install_global typescript
